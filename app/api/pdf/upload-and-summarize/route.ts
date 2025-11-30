@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { extractTextFromPdf } from '@/lib/pdf/extractText';
+import { prisma } from '@/lib/prisma';
 import OpenAI from 'openai';
 
 const client = new OpenAI({
@@ -7,6 +8,8 @@ const client = new OpenAI({
 });
 
 export async function POST(req: NextRequest) {
+  const startTime = Date.now();
+  
   try {
     console.log('Upload-and-summarize request received');
     
@@ -60,6 +63,44 @@ export async function POST(req: NextRequest) {
       'No summary generated.';
 
     console.log('Summarization complete, summary length:', summary?.length);
+
+    // 3) Persist to database
+    console.log('Saving to database...');
+    const durationMs = Date.now() - startTime;
+    
+    try {
+      // Create Document record
+      const document = await prisma.document.create({
+        data: {
+          fileName: metadata.fileName,
+          fileSize: metadata.fileSize,
+          summary: summary,
+        },
+      });
+      
+      // Create Event record for analytics
+      await prisma.event.create({
+        data: {
+          type: 'UPLOAD_AND_SUMMARIZE',
+          documentId: document.id,
+          metadata: JSON.stringify({
+            durationMs,
+            fileName: metadata.fileName,
+            fileSize: metadata.fileSize,
+            uploadedAt: metadata.uploadedAt,
+            textLength: text.length,
+            summaryLength: summary.length,
+          }),
+        },
+      });
+      
+      console.log('Database save complete, document ID:', document.id);
+      
+    } catch (dbError) {
+      console.error('Database save failed (continuing without persistence):', dbError);
+      // Continue without failing the request - database issues shouldn't break the core functionality
+      // This allows the app to work even if Supabase is not accessible
+    }
 
     return NextResponse.json({ summary, metadata });
 
