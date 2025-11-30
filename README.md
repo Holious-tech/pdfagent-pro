@@ -150,6 +150,38 @@ PDFAgent Pro revolutionizes PDF workflows for busy professionals who waste hours
 
 ---
 
+## Architecture Overview
+
+PDFAgent Pro follows a microservices architecture with specialized services for AI orchestration, PDF processing, and data management. The system is designed for scalability, maintainability, and clear separation of concerns.
+
+### System Context
+
+The high-level system context shows how users (Sarah and Marcus) interact with PDFAgent Pro, and how the system integrates with external services like LLM providers and object storage.
+
+![System Context Diagram](docs/architecture/context.png)
+
+### Container Architecture
+
+The container diagram details the internal architecture with five key components:
+
+- **Web Application** (React/TypeScript): Browser-based UI for PDF editing and conversational interactions
+- **Backend API** (Node.js/Express): Orchestrates workflows, manages auth, coordinates services
+- **AI Orchestration Service** (Python/LangChain): Processes natural language, maintains context, coordinates with LLMs
+- **PDF Processing Service** (Python/PyPDF2/Tesseract): Handles OCR, text extraction, table detection
+- **Data Store** (PostgreSQL): Stores user data, documents, chat history, analytics events
+
+![Container Diagram](docs/architecture/containers.png)
+
+### Deployment Architecture
+
+Production deployment on AWS leverages CloudFront CDN for the web app, ECS for containerized services, RDS for the database, and S3 for object storage.
+
+![Deployment Diagram](docs/architecture/deployment.png)
+
+**Architecture as Code**: All diagrams are generated from [Structurizr DSL](docs/architecture/workspace.dsl) following the C4 model.
+
+
+
 ## Getting Started
 
 *This repository will contain the product roadmap, technical architecture, and development milestones for PDFAgent Pro.*
