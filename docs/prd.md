@@ -2,8 +2,8 @@
 # PDFAgent Pro - AI-Powered PDF Editor
 
 **Version**: 1.0  
-**Author**: Product Management Team  
-**Last Updated**: November 30, 2025  
+**Author**: Idode Destiny M  
+**Last Updated**: November 30, 2025
 **Status**: MVP Planning
 
 ---
