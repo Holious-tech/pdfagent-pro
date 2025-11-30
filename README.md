@@ -4,6 +4,12 @@
 **Project Type**: AI Product Management Portfolio  
 **Last Updated**: November 30, 2025
 
+## Live Demo
+
+🚀 **[View Live Application](https://pdfagent-pro.vercel.app)**
+
+The application is deployed on Vercel and available for testing. Local development uses SQLite via Prisma; the architecture is designed for PostgreSQL in production environments.
+
 
 ## Product Vision
 PDFAgent Pro revolutionizes PDF workflows for busy professionals who waste hours on repetitive document tasks. Unlike expensive traditional editors that require manual effort, we combine conversational AI agents with intelligent automation to deliver instant document editing, summarization, and extraction. Success is measured by reducing document processing time by 70% while maintaining 95%+ accuracy, democratizing enterprise-grade PDF capabilities at a fraction of the cost.
