@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import PDFParser from 'pdf2json';
 
-export async function POST(req: NextRequest)): Promise<NextResponse> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     console.log('PDF extraction request received');
     
