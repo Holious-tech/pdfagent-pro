@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -47,8 +48,25 @@ export default function Home() {
 
   return (
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>PDFAgent Pro – MVP</h1>
-      <p>Upload and summarize PDF documents with AI-powered analysis.</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+        <div>
+          <h1>PDFAgent Pro – MVP</h1>
+          <p>Upload and summarize PDF documents with AI-powered analysis.</p>
+        </div>
+        <Link 
+          href="/dashboard"
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: '#6c757d',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '4px',
+            fontSize: '14px'
+          }}
+        >
+          📊 Dashboard
+        </Link>
+      </div>
       
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '1rem' }}>
