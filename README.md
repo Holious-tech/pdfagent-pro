@@ -158,7 +158,7 @@ PDFAgent Pro follows a microservices architecture with specialized services for 
 
 The high-level system context shows how users (Sarah and Marcus) interact with PDFAgent Pro, and how the system integrates with external services like LLM providers and object storage.
 
-![System Context Diagram](docs/architecture/context.png)
+![System Context Diagram](docs/architecture/SystemContext.png)
 
 ### Container Architecture
 
@@ -170,13 +170,13 @@ The container diagram details the internal architecture with five key components
 - **PDF Processing Service** (Python/PyPDF2/Tesseract): Handles OCR, text extraction, table detection
 - **Data Store** (PostgreSQL): Stores user data, documents, chat history, analytics events
 
-![Container Diagram](docs/architecture/containers.png)
+![Container Diagram](docs/architecture/Containers.png)
 
 ### Deployment Architecture
 
 Production deployment on AWS leverages CloudFront CDN for the web app, ECS for containerized services, RDS for the database, and S3 for object storage.
 
-![Deployment Diagram](docs/architecture/deployment.png)
+![Deployment Diagram](docs/architecture/Deployment.png)
 
 **Architecture as Code**: All diagrams are generated from [Structurizr DSL](docs/architecture/workspace.dsl) following the C4 model.
 
