@@ -21,54 +21,25 @@ export default function Home() {
     setSummary('');
 
     try {
-      // Step 1: Extract text from uploaded PDF
       const formData = new FormData();
       formData.append('file', file);
 
-      const extractResponse = await fetch('/api/extract-pdf', {
+      const response = await fetch('/api/pdf/upload-and-summarize', {
         method: 'POST',
         body: formData,
       });
 
-      if (!extractResponse.ok) {
-        const errorData = await extractResponse.json();
-        console.error('PDF extraction API error:', errorData);
-        throw new Error(`PDF extraction failed: ${errorData.error || 'Unknown error'}`);
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(err?.error || 'Upload and summarization failed');
       }
 
-      const extractData = await extractResponse.json();
-      const extractedText = extractData.text;
+      const data = await response.json();
+      setSummary(data.summary);
 
-      if (!extractedText || extractedText.trim().length === 0) {
-        throw new Error('No text could be extracted from the PDF');
-      }
-
-      // Step 2: Summarize the extracted text with AI
-      const summarizeResponse = await fetch('/api/summarize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: extractedText,
-          instructions: 'Provide a concise summary for a busy professional.'
-        }),
-      });
-
-      if (!summarizeResponse.ok) {
-        const errorData = await summarizeResponse.json();
-        console.error('Summarize API error:', errorData);
-        throw new Error(`Summarization failed: ${errorData.error || 'Unknown error'}`);
-      }
-
-      const summarizeData = await summarizeResponse.json();
-      
-      // Step 3: Show result
-      setSummary(summarizeData.summary);
-      
-    } catch (err) {
-      setError('Something went wrong');
+    } catch (err: any) {
       console.error(err);
+      setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
