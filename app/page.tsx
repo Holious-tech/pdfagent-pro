@@ -21,39 +21,44 @@ export default function Home() {
     setSummary('');
 
     try {
-      // Step 1: Upload (mocked)
-      const uploadResponse = await fetch('/api/mock-upload', {
+      // Step 1: Extract text from uploaded PDF
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const extractResponse = await fetch('/api/extract-pdf', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          userId: 'demo-user',
-          fileName: file.name 
-        }),
+        body: formData,
       });
 
-      if (!uploadResponse.ok) {
-        throw new Error('Upload failed');
+      if (!extractResponse.ok) {
+        const errorData = await extractResponse.json();
+        console.error('PDF extraction API error:', errorData);
+        throw new Error(`PDF extraction failed: ${errorData.error || 'Unknown error'}`);
       }
 
-      const uploadData = await uploadResponse.json();
-      const documentId = uploadData.documentId;
+      const extractData = await extractResponse.json();
+      const extractedText = extractData.text;
 
-      // Step 2: Summarize (mocked)
-      const summarizeResponse = await fetch('/api/mock-summarize', {
+      if (!extractedText || extractedText.trim().length === 0) {
+        throw new Error('No text could be extracted from the PDF');
+      }
+
+      // Step 2: Summarize the extracted text with AI
+      const summarizeResponse = await fetch('/api/summarize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          documentId,
-          instructions: 'Provide a concise summary'
+          text: extractedText,
+          instructions: 'Provide a concise summary for a busy professional.'
         }),
       });
 
       if (!summarizeResponse.ok) {
-        throw new Error('Summarization failed');
+        const errorData = await summarizeResponse.json();
+        console.error('Summarize API error:', errorData);
+        throw new Error(`Summarization failed: ${errorData.error || 'Unknown error'}`);
       }
 
       const summarizeData = await summarizeResponse.json();
@@ -100,7 +105,7 @@ export default function Home() {
             cursor: loading || !file ? 'not-allowed' : 'pointer'
           }}
         >
-          {loading ? 'Summarizing...' : 'Upload & Summarize'}
+          {loading ? 'Extracting & Summarizing...' : 'Upload & Summarize'}
         </button>
       </form>
 

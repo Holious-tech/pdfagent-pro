@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    appDir: true,
-  },
   // Configure API routes to proxy to Express server in development
   async rewrites() {
     return [
