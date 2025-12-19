@@ -203,4 +203,6 @@ The application is deployed on Vercel and available for testing. Local developme
 
 ## License
 
-MIT License - See LICENSE file for details
+Portfolio Work - MSc Management Project
+
+This repository represents coursework and portfolio development for an MSc in Management. It is created for educational purposes and creative exploration as part of academic studies. No formal license applies to this project.
