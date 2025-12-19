@@ -4,11 +4,6 @@
 **Project Type**: AI Product Management Portfolio  
 **Last Updated**: November 30, 2025
 
-## Live Demo
-
-🚀 **[View Live Application](https://pdfagent-pro.vercel.app)**
-
-The application is deployed on Vercel and available for testing. Local development uses SQLite via Prisma; the architecture is designed for PostgreSQL in production environments.
 
 
 ## Product Vision
@@ -190,6 +185,12 @@ Production deployment on AWS leverages CloudFront CDN for the web app, ECS for c
 ![Deployment Diagram](docs/architecture/Deployment.png)
 
 **Architecture as Code**: All diagrams are generated from [Structurizr DSL](docs/architecture/workspace.dsl) following the C4 model.
+## Live Demo
+
+
+🚀 **[View Live Application](https://pdfagent-pro.vercel.app)**
+
+The application is deployed on Vercel and available for testing. Local development uses SQLite via Prisma; the architecture is designed for 
 
 
 
